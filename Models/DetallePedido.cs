@@ -29,7 +29,7 @@ namespace TiendaElectronica.Models
         [DisplayFormat(DataFormatString = "{0:C2}")]
         public decimal Subtotal { get; set; }
 
-        // Navegación
+
         [ForeignKey("PedidoId")]
         public virtual Pedido Pedido { get; set; }
 
