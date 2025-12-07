@@ -1,50 +1,451 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - TiendaElectronica</title>
-    <script type="importmap"></script>
+    <title>@ViewData["Title"] - Tienda Electrónica</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/TiendaElectronica.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #3b82f6;
+            --accent-color: #60a5fa;
+            --dark-bg: #0f172a;
+            --light-bg: #f8fafc;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+        }
+
+        /* Navbar Principal */
+        .navbar-main {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 0.8rem 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white !important;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-brand i {
+            font-size: 1.8rem;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem !important;
+            border-radius: 5px;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: white !important;
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background-color: rgba(255,255,255,0.2);
+            color: white !important;
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown-item {
+            padding: 0.7rem 1.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--accent-color);
+            color: white;
+            padding-left: 2rem;
+        }
+
+        .dropdown-divider {
+            margin: 0.5rem 0;
+        }
+
+        /* Badge Carrito */
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background-color: var(--danger-color);
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .nav-cart {
+            position: relative;
+            font-size: 1.3rem;
+        }
+
+        /* Usuario Dropdown */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: white;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--primary-color) 100%);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-section {
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h5 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section ul li a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .social-icons a {
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .current-time {
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        /* Contenido Principal */
+        main {
+            min-height: calc(100vh - 400px);
+            padding: 2rem 0;
+        }
+
+        /* Alertas */
+        .alert {
+            border-radius: 8px;
+            border: none;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TiendaElectronica</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg navbar-main">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-bolt"></i>
+                    Tienda Electrónica
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse" id="navbarMain">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <!-- TIENDA -->
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-controller="Tienda" asp-action="Index">
+                                <i class="fas fa-store"></i> Tienda
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+                        <!-- CATEGORÍAS -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-th-large"></i> Categorías
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-mobile-alt"></i> Smartphones</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-laptop"></i> Laptops</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-tablet-alt"></i> Tablets</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-headphones"></i> Audio</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-gamepad"></i> Gaming</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-camera"></i> Cámaras</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-watch"></i> Smartwatch</a></li>
+                            </ul>
                         </li>
+
+                        <!-- ADMINISTRACIÓN (Solo Admin) -->
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-cog"></i> Administración
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><h6 class="dropdown-header">Usuarios y Roles</h6></li>
+                                    <li><a class="dropdown-item" asp-controller="Usuarios" asp-action="Index"><i class="fas fa-users"></i> Usuarios</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Roles" asp-action="Index"><i class="fas fa-user-tag"></i> Roles</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><h6 class="dropdown-header">Configuración</h6></li>
+                                    <li><a class="dropdown-item" asp-controller="CuentasBancarias" asp-action="Index"><i class="fas fa-university"></i> Cuentas Bancarias</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Configuracion" asp-action="Index"><i class="fas fa-sliders-h"></i> Configuración General</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><h6 class="dropdown-header">Reportes</h6></li>
+                                    <li><a class="dropdown-item" asp-controller="Dashboard" asp-action="Index"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Reportes" asp-action="Index"><i class="fas fa-file-chart-line"></i> Reportes de Ventas</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Consultas" asp-action="Index"><i class="fas fa-search"></i> Consultas</a></li>
+                                </ul>
+                            </li>
+                        }
+
+                        <!-- PRODUCTOS (Admin/Mantenedor) -->
+                        @if (User.IsInRole("Admin") || User.IsInRole("Mantenedor"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-box"></i> Productos
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Productos" asp-action="Index"><i class="fas fa-list"></i> Gestionar Productos</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Productos" asp-action="Create"><i class="fas fa-plus"></i> Nuevo Producto</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Categorias" asp-action="Index"><i class="fas fa-tags"></i> Categorías</a></li>
+                                </ul>
+                            </li>
+                        }
+
+                        <!-- PEDIDOS (Admin/Mantenedor) -->
+                        @if (User.IsInRole("Admin") || User.IsInRole("Mantenedor"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-shopping-bag"></i> Pedidos
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Pedidos" asp-action="Index"><i class="fas fa-list-ul"></i> Todos los Pedidos</a></li>
+                                    <li><a class="dropdown-item" asp-controller="ComprobantesDeposito" asp-action="PendientesValidacion"><i class="fas fa-check-circle"></i> Validar Depósitos</a></li>
+                                    <li><a class="dropdown-item" asp-controller="NotasPedido" asp-action="Index"><i class="fas fa-file-invoice"></i> Notas de Pedido</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Entregas" asp-action="Index"><i class="fas fa-truck"></i> Gestión de Entregas</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><h6 class="dropdown-header">Comprobantes</h6></li>
+                                    <li><a class="dropdown-item" asp-controller="ComprobantesVenta" asp-action="Index"><i class="fas fa-receipt"></i> Boletas y Facturas</a></li>
+                                    <li><a class="dropdown-item" asp-controller="NotasCredito" asp-action="Index"><i class="fas fa-file-alt"></i> Notas de Crédito</a></li>
+                                    <li><a class="dropdown-item" asp-controller="NotasDebito" asp-action="Index"><i class="fas fa-file-invoice-dollar"></i> Notas de Débito</a></li>
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+
+                    <!-- USUARIO Y CARRITO -->
+                    <ul class="navbar-nav ms-auto">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <!-- CARRITO (Solo Cliente) -->
+                            @if (User.IsInRole("Cliente"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link nav-cart" asp-controller="Carrito" asp-action="Index">
+                                        <i class="fas fa-shopping-cart"></i>
+                                        <span class="cart-badge" id="cart-count">0</span>
+                                    </a>
+                                </li>
+                            }
+
+                            <!-- MIS PEDIDOS (Solo Cliente) -->
+                            @if (User.IsInRole("Cliente"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Pedidos" asp-action="MisPedidos">
+                                        <i class="fas fa-box-open"></i> Mis Pedidos
+                                    </a>
+                                </li>
+                            }
+
+                            <!-- USUARIO DROPDOWN -->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle user-info" href="#" role="button" data-bs-toggle="dropdown">
+                                    <div class="user-avatar">
+                                        @User.Identity.Name.Substring(0, 1).ToUpper()
+                                    </div>
+                                    <span>@User.Identity.Name</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" asp-controller="Account" asp-action="Profile"><i class="fas fa-user"></i> Mi Perfil</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Account" asp-action="Login">
+                                    <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Account" asp-action="Register">
+                                    <i class="fas fa-user-plus"></i> Registrarse
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
+    <main role="main">
         <div class="container">
-            &copy; 2025 - TiendaElectronica - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <!-- Información de la Empresa -->
+                <div class="col-md-4 footer-section">
+                    <h5><i class="fas fa-bolt"></i> Tienda Electrónica</h5>
+                    <p>Tu destino para la mejor tecnología y electrónica. Productos de calidad con garantía y el mejor servicio al cliente.</p>
+                    <div class="social-icons">
+                        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <!-- Enlaces Rápidos -->
+                <div class="col-md-4 footer-section">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul>
+                        <li><a asp-controller="Home" asp-action="Index"><i class="fas fa-home"></i> Inicio</a></li>
+                        <li><a asp-controller="Tienda" asp-action="Index"><i class="fas fa-store"></i> Tienda</a></li>
+                        <li><a asp-controller="Home" asp-action="About"><i class="fas fa-info-circle"></i> Sobre Nosotros</a></li>
+                        <li><a asp-controller="Home" asp-action="Contact"><i class="fas fa-envelope"></i> Contacto</a></li>
+                        <li><a asp-controller="Home" asp-action="Privacy"><i class="fas fa-shield-alt"></i> Política de Privacidad</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contacto -->
+                <div class="col-md-4 footer-section">
+                    <h5>Contacto</h5>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Av. Principal 123, Lima, Perú</li>
+                        <li><i class="fas fa-phone"></i> +51 999 999 999</li>
+                        <li><i class="fas fa-envelope"></i> info@tiendaelectronica.com</li>
+                        <li class="current-time">
+                            <i class="fas fa-clock"></i> 
+                            <span id="current-datetime"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> Tienda Electrónica. Todos los derechos reservados.</p>
+            </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        // Actualizar fecha y hora en tiempo real
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            document.getElementById('current-datetime').textContent = now.toLocaleDateString('es-PE', options);
+            document.getElementById('current-year').textContent = now.getFullYear();
+        }
+        
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        // Actualizar contador del carrito (ejemplo)
+        function updateCartCount() {
+            // Aquí deberías hacer una llamada AJAX para obtener la cantidad real
+            // Por ahora es un ejemplo estático
+            const count = 0; // Reemplazar con datos reales
+            document.getElementById('cart-count').textContent = count;
+        }
+        
+        updateCartCount();
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
