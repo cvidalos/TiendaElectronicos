@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TiendaElectronica.Models
@@ -27,9 +28,9 @@ namespace TiendaElectronica.Models
 
         // Navegación
         [ForeignKey("UsuarioId")]
-        public virtual Usuario Usuario { get; set; }
+        public virtual Usuario? Usuario { get; set; }
 
         [ForeignKey("ProductoId")]
-        public virtual Producto Producto { get; set; }
+        public virtual Producto? Producto { get; set; }
     }
 }

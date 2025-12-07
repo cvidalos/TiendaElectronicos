@@ -21,16 +21,16 @@ namespace TiendaElectronica.Models
         public DateTime FechaCambio { get; set; } = DateTime.Now;
 
         [StringLength(500)]
-        public string Comentario { get; set; }
+        public string? Comentario { get; set; }
 
         // Navegación
         [ForeignKey("PedidoId")]
-        public virtual Pedido Pedido { get; set; }
+        public virtual Pedido? Pedido { get; set; }
 
         [ForeignKey("EstadoId")]
-        public virtual EstadoPedido Estado { get; set; }
+        public virtual EstadoPedido? Estado { get; set; }
 
         [ForeignKey("UsuarioId")]
-        public virtual Usuario Usuario { get; set; }
+        public virtual Usuario ? Usuario { get; set; }
     }
 }

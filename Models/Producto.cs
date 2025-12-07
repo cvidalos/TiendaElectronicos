@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TiendaElectronica.Models
@@ -37,10 +39,12 @@ namespace TiendaElectronica.Models
         public decimal? PrecioOferta { get; set; }
 
         [Required]
-        [Range(0, int.MaxValue, ErrorMessage = "El stock debe ser mayor o igual a 0")]
-        public int Stock { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "El stock no puede ser negativo")]
+        [Display(Name = "Stock Disponible")]
+        public int Stock { get; set; } = 0;
 
         [Display(Name = "Stock Mínimo")]
+        [Range(0, int.MaxValue, ErrorMessage = "El stock mínimo no puede ser negativo")]
         public int StockMinimo { get; set; } = 5;
 
         [StringLength(100)]
@@ -60,7 +64,6 @@ namespace TiendaElectronica.Models
 
         public bool Destacado { get; set; } = false;
 
-        // Propiedades calculadas
         [NotMapped]
         [Display(Name = "Precio Final")]
         public decimal PrecioFinal => PrecioOferta ?? Precio;
@@ -91,6 +94,6 @@ namespace TiendaElectronica.Models
         public virtual ICollection<ImagenProducto> Imagenes { get; set; }
         public virtual ICollection<DetallePedido> DetallesPedido { get; set; }
         public virtual ICollection<CarritoCompra> CarritoCompras { get; set; }
+        public virtual ICollection<DetalleNotaCredito> DetallesNotasCredito { get; set; }
     }
-
 }

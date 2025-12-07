@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TiendaElectronica.Models
@@ -13,6 +15,22 @@ namespace TiendaElectronica.Models
 
         [Required]
         public int EstadoId { get; set; }
+
+        [Required(ErrorMessage = "Debe seleccionar el tipo de comprobante")]
+        [StringLength(20)]
+        [Display(Name = "Tipo de Comprobante")]
+        public string TipoComprobante { get; set; }
+
+        [StringLength(200)]
+        [Display(Name = "Razón Social")]
+        public string RazonSocial { get; set; }
+
+        [StringLength(11)]
+        public string RUC { get; set; }
+
+        [StringLength(255)]
+        [Display(Name = "Dirección Fiscal")]
+        public string DireccionFiscal { get; set; }
 
         [Display(Name = "Fecha del Pedido")]
         public DateTime FechaPedido { get; set; } = DateTime.Now;
@@ -31,8 +49,9 @@ namespace TiendaElectronica.Models
         public decimal Subtotal { get; set; }
 
         [Column(TypeName = "decimal(10,2)")]
+        [Display(Name = "IGV (18%)")]
         [DisplayFormat(DataFormatString = "{0:C2}")]
-        public decimal Impuesto { get; set; } = 0;
+        public decimal IGV { get; set; } = 0;
 
         [Column(TypeName = "decimal(10,2)")]
         [Display(Name = "Costo de Envío")]
@@ -72,5 +91,10 @@ namespace TiendaElectronica.Models
 
         public virtual ICollection<DetallePedido> DetallesPedido { get; set; }
         public virtual ICollection<HistorialEstadoPedido> HistorialEstados { get; set; }
+        public virtual ICollection<ComprobanteDeposito> ComprobantesDeposito { get; set; }
+        public virtual NotaPedido NotaPedido { get; set; }
+        public virtual ICollection<ComprobanteVenta> ComprobantesVenta { get; set; }
+        public virtual ICollection<NotaCredito> NotasCredito { get; set; }
+        public virtual ICollection<NotaDebito> NotasDebito { get; set; }
     }
 }

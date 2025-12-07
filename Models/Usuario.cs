@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TiendaElectronica.Models
@@ -36,6 +38,14 @@ namespace TiendaElectronica.Models
         public string Apellidos { get; set; }
 
         [StringLength(20)]
+        [Display(Name = "Tipo de Documento")]
+        public string TipoDocumento { get; set; }
+
+        [StringLength(20)]
+        [Display(Name = "Número de Documento")]
+        public string NumeroDocumento { get; set; }
+
+        [StringLength(20)]
         [Display(Name = "Teléfono")]
         public string Telefono { get; set; }
 
@@ -62,7 +72,6 @@ namespace TiendaElectronica.Models
 
         public bool Activo { get; set; } = true;
 
-        // Propiedad calculada
         [NotMapped]
         [Display(Name = "Nombre Completo")]
         public string NombreCompleto => $"{Nombres} {Apellidos}";
@@ -73,5 +82,6 @@ namespace TiendaElectronica.Models
         public virtual ICollection<Pedido> Pedidos { get; set; }
         public virtual ICollection<CarritoCompra> CarritoCompras { get; set; }
         public virtual ICollection<HistorialEstadoPedido> HistorialEstados { get; set; }
+        public virtual ICollection<ComprobanteDeposito> ComprobantesValidados { get; set; }
     }
 }
