@@ -1,3 +1,6 @@
+using TiendaElectronica.DAO;
+using TiendaElectronica.Repositorio;
+
 namespace TiendaElectronica
 {
     public class Program
@@ -8,6 +11,7 @@ namespace TiendaElectronica
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<IUsuarioRepositorio, UsuarioDAO>();
 
             var app = builder.Build();
 
